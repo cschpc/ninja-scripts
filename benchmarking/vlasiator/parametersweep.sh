@@ -1,42 +1,16 @@
 #!/bin/bash
 ulimit -c unlimited
 
-#####################################################################################################
-# Run parameters - please edit
-#####################################################################################################
 
-range_hyperthreads="4 2 1"
-range_processes="1 2 4 8 16 32 64"
-range_i_mpi_pin_order="compact"
-range_kmp_affinity="compact scatter balanced"
-mpilibrary="openmpi"                          #openmpi or intel
-forcemcdram="0 1"                             #"0","1" or "0 1". If 1 it adds numactl -m 1 command 
 
-#####################################################################################################
-# Define code - please edit
-#####################################################################################################
+if [[  $# -ne 2 ]]
+then
+    echo "Usage $0 code-description.sh parameters.sh"
+    exit
+fi
 
-bin="vlasiator" # we assume that the binary is in the folder where the script is executed
-parameters="--run_config=magnetosphere.cfg"  #run parameters
-testfolder="tests" #folder where tests are stored
-tests="small medium large" #name of test folders within testfolder (multiple allowes)
-
-#function for computing performance (perf) and execution time (time). Executed in run folder
-function get_perf()
-{
-    perf=0
-    for f in phiprof_*.txt
-    do
-	procs=$(grep "Set of identical timers has" $f |gawk '{printf $8}')
-	temp=$(grep "Propagate   " $f  |gawk -v perf=$perf -v procs=$procs '{printf perf + procs * $21}')
-	perf=$temp
-    done
-    time=$(grep "Propagate   " phiprof_0.txt  |gawk '{printf $11}')
-	
-}
-
-#application specific env variables
-export PHIPROF_PRINTS="full"
+source $1
+source $2
 
 
 #####################################################################################################
