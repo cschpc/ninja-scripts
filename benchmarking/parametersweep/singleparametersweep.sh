@@ -16,11 +16,11 @@ source $2
 function set_default_values()
 
 {
-    taff=default_kmp_affinity
-    impo=default_i_mpi_pin_order    
-    ht=default_hyperthreads
-    processes=default_processes
-    fm=default_forcemcdram
+    taff=$default_kmp_affinity
+    impo=$default_i_mpi_pin_order    
+    ht=$default_hyperthreads
+    processes=$default_processes
+    fm=$default_forcemcdram
 
 
 }
@@ -133,7 +133,7 @@ do
 
     for taff in ${range_kmp_affinity}
     do
-	if [ $taff -ne $default_kmp_affinity ]
+	if [ ! $taff == ${default_kmp_affinity} ]
 	then
 	    run_benchmark
 	fi
@@ -141,7 +141,7 @@ do
     
     for impo in ${range_i_mpi_pin_order}
     do
- 	if [ $impo -ne ${default_i_mpi_pin_order} ]
+ 	if [ ! $impo == ${default_i_mpi_pin_order} ]
 	then
 	    run_benchmark
 	fi
@@ -167,7 +167,7 @@ do
     
     for fm in  $range_forcemcdram 
     do
- 	if [ $fm -nw $default_forcemcdram ]
+ 	if [ $fm -ne $default_forcemcdram ]
 	then
 	    run_benchmark
 	fi
