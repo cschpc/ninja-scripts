@@ -57,7 +57,7 @@ do
 
 		for test in ${tests}
 		do
-		    for fm in  $forcemcdram 
+		    for fm in  $range_forcemcdram 
 		    do
 			#add mcdram mode
 			if [ $fm -eq 1 ]
