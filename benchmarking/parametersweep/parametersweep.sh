@@ -1,8 +1,6 @@
 #!/bin/bash
 ulimit -c unlimited
 
-
-
 if [[  $# -ne 2 ]]
 then
     echo "Usage $0 code-description.sh parameters.sh"
@@ -94,22 +92,23 @@ do
 			mkdir $dir
 			cd $dir
 			#link all input files
-			ln -s ${rootfolder}/${testfolder}/${test}/* .
+			ln -s ${testfolder}/${test}/* .
 
 			if [ "$mpilibrary" == "openmpi" ]
 			then
 			    if [ $processes -ne 64 ]; then
-				echo  "mpirun -cpus-per-proc $cpusperproc  -np $processes  ${numactlcommand} ${rootfolder}/${bin} $parameters"
-				mpirun -cpus-per-proc $cpusperproc  -np $processes  ${numactlcommand} ${rootfolder}/${bin} $parameters 2> errors.txt > out.txt 
+				echo  "mpirun -cpus-per-proc $cpusperproc -np $processes ${numactlcommand} ${bin} $parameters"
+				mpirun -cpus-per-proc $cpusperproc -np $processes ${numactlcommand} ${bin} $parameters 2> errors.txt > out.txt 
 				
 			    else
-				echo "mpirun --bind-to core  -np $processes ${numactlcommand} ${rootfolder}/${bin} $parameters "
-				mpirun --bind-to core  -np $processes ${numactlcommand} ${rootfolder}/${bin} $parameters  2> errors.txt > out.txt
+				echo "mpirun --bind-to core  -np $processes ${numactlcommand} ${bin} $parameters "
+				mpirun --bind-to core  -np $processes ${numactlcommand} ${bin} $parameters  2> errors.txt > out.txt
 			    fi
 			fi
 			if [ "$mpilibrary" == "intel" ]
 			then
-			    mpirun -np $processes  ${numactlcommand} ${rootfolder}/${bin} $parameters 2> errors.txt > out.txt
+			    echo "mpirun -np $processes ${numactlcommand} ${bin} $parameters"
+			    mpirun -np $processes ${numactlcommand} ${bin} $parameters 2> errors.txt > out.txt
 			fi
 			
 			#execute function to get perf

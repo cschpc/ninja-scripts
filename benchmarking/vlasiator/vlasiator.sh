@@ -2,10 +2,9 @@
 #####################################################################################################
 # Define code - please edit
 #####################################################################################################
-
-bin="vlasiator" # we assume that the binary is in the folder where the script is executed
+bin=$(pwd)"/vlasiator" # Binary name (with absolute path)
 parameters="--run_config=magnetosphere.cfg"  #run parameters
-testfolder="tests" #folder where tests are stored
+testfolder=$(pwd)"/tests" #folder where tests are stored (absolute path)
 tests="small medium large" #name of test folders within testfolder (multiple allowes)
 
 #function for computing performance (perf) and execution time (time). Executed in run folder
